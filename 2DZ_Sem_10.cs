@@ -14,33 +14,70 @@
 // Как только сумма в группе превысит среднее арифметическое - пропустить и 
 // перейти к следующей группе и так до тех пор, пока не останется самое меньшее из всего массива, 
 // которое после 1-го цикла превышения попадает в группу с самым минимальным превышением целевой суммы.
+
+// Решение с помощью рекурсии
+// она будет использоваться для повторения вывода чисел до заданного числа numb, с переходом на новую строку и обновления значения группы
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 namespace ReadKey
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, world!");
-                
-            Console.Write("Print N: ");
-                int numb = Int32.Parse(Console.ReadLine());
-                int groop = 0;
-                for(int i= 1; i<=numb; i++)
-                {
-                    if(i ==Math.Pow(2,groop))
-                    {
-                        Console.WriteLine();
-                        groop++;
-                        Console.Write($"{groop}-groop");
-                    }
-                    Console.Write($"{i,5}") ;
-                }
-                Console.ReadKey();         
+       static void PrintNumbers(int n, int group, int counter)
+       {
+           if (counter <= n)
+           {
+               if (counter == Math.Pow(2, group)) //counter=1(2**0), counter=2(2**1), counter=4(2**2) ... при counter=2**group - переход на новую строку, увеличение group на 1, а это новая группу чисел.
+               {
+                   Console.WriteLine();
+                   group++;
+                   Console.Write($"{group}-groop");
+               }
+               Console.Write(($"{counter,3}")); // при n = >100 смена форматного кода на 4
+               PrintNumbers(n, group, counter + 1);
+               }
+       }
+
+       static void Main()
+       {
+           Console.Write("Print N: ");
+           int numb = Int32.Parse(Console.ReadLine());
+           int group = 0;
+           PrintNumbers(numb, group, 1);
+           Console.ReadKey();
+       } 
+    }
+}
+
+// Решение без рекурсии
+// // Сумму всего массива нужно разделить на кол-во групп (ср.арифметическое число в группе, к которому будем стремиться) 
+// и по-очереди набирать в группы, начиная с самой большой цифры (значения элемента) из массива. 
+// Как только сумма в группе превысит среднее арифметическое - пропустить и 
+// перейти к следующей группе и так до тех пор, пока не останется самое меньшее из всего массива, 
+// которое после 1-го цикла превышения попадает в группу с самым минимальным превышением целевой суммы.
+// 
+// {
+//     public class Program
+//     {
+//         public static void Main(string[] args)
+//         {                         
+//             Console.Write("Print N: ");
+//                 int numb = Int32.Parse(Console.ReadLine());
+//                 int groop = 0;
+//                 for(int i= 1; i<=numb; i++)
+//                 {
+//                     if(i ==Math.Pow(2,groop))
+//                     {
+//                         Console.WriteLine();
+//                         groop++;
+//                         Console.Write($"{groop}-groop");
+//                     }
+//                     Console.Write($"{i,5}") ;
+//                 }
+//                 Console.ReadKey();         
         
-        }
+//         }
  
 // Дополнительная задача 74*: 4 друга должны посетить 12 пабов (int num_bars), в котором выпить по британской пинте пенного напитка (beer). 
 // До каждого бара идти примерно 15-20 минут(dist int[]), каждый пьет пинту за 15 минут (int time_0). 
