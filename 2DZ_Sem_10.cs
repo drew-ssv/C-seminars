@@ -87,7 +87,6 @@ namespace ReadKey
 
 
         {
-            Console.WriteLine ("Hello, world!");
             int num_bars = 12;
             double beer = 0.56826;
             double [] lim = {1.1, 1.5, 2.2, 3.3};
